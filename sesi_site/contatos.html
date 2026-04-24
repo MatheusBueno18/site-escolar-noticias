@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatos — SESI|SENAI</title>
+  <meta name="description" content="Entre em contato com o SESI SENAI.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /*confirmação*/
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #1e7d43;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body data-page="contatos">
+
+  <div id="site-header"></div>
+
+  <main>
+    <div class="page-wrapper">
+
+      <div class="main-col">
+        <div class="contato-main">
+          <h2>Fale Conosco</h2>
+          <p class="subtitle">Preencha o formulário abaixo com sua mensagem, reclamação ou elogio. Nossa equipe
+            responderá em breve.</p>
+
+          <form id="contato-form" class="contato-form" novalidate>
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" autocomplete="email"
+                required>
+            </div>
+
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp</label>
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" autocomplete="tel">
+            </div>
+
+            <div class="form-group">
+              <label for="mensagem">Reclamações / Elogios</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Escreva sua mensagem aqui…" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sidebar-box">
+          <div class="sidebar-title">Notícias em destaque</div>
+
+          <a href="noticias.html" class="sidebar-card" style="text-decoration:none">
+            <img src="img/carro.jpg" alt="Veículos elétricos">
+            <div class="sidebar-card-title">Projeto de lei quer permitir CNH 'comum' para dirigir veículos elétricos de
+              até 4.250 kg</div>
+          </a>
+
+          <a href="noticias.html" class="sidebar-card" style="text-decoration:none">
+            <img src="img/imposto.avif" alt="Imposto de Renda">
+            <div class="sidebar-card-title">Imposto de Renda 2026: quando vou receber a restituição?</div>
+          </a>
+
+          <a href="noticias.html" class="sidebar-card" style="text-decoration:none">
+            <img src="img/dolar.png" alt="Dólar">
+            <div class="sidebar-card-title">Dólar abre em alta com incertezas sobre negociações entre EUA e Irã;
+              Ibovespa recua</div>
+          </a>
+
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite">
+    <i class="fa-solid fa-circle-check"></i> Mensagem enviada com sucesso!
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="components.js"></script>
+  <script>
+    document.getElementById('contato-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      this.reset();
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    });
+
+    document.getElementById('whatsapp').addEventListener('input', function () {
+      let v = this.value.replace(/\D/g, '').substring(0, 11);
+      if (v.length >= 7) {
+        v = `(${v.substring(0, 2)}) ${v.substring(2, 7)}-${v.substring(7)}`;
+      } else if (v.length >= 3) {
+        v = `(${v.substring(0, 2)}) ${v.substring(2)}`;
+      }
+      this.value = v;
+    });
+  </script>
+</body>
+
+</html>
